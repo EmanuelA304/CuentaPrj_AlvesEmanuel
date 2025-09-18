@@ -1,0 +1,75 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Cuenta {
+    private String codCuenta = "cta-";
+    private double saldo;
+    private String nombreCuentaHabiente;
+    private String fechaCreacion;
+    private int cantDepositosRealizados;
+    private int cantRetirosExitososRealizados;
+    private static int cantCuentasCreadas = 0;
+    
+    public Cuenta(String nombreCuentaHabiente, double pSaldo){
+        this.nombreCuentaHabiente = nombreCuentaHabiente;
+        saldo = pSaldo;
+    }
+    
+    public Cuenta( double pSaldo) {
+        this("EmanuelCuenta" , pSaldo);
+    }
+    
+    public void setNombreCuentaHabiente(String pNombreCuentaHabiente) {
+        this.nombreCuentaHabiente = pNombreCuentaHabiente;
+    }
+    
+    public String getCodCuenta() {
+        return codCuenta;
+    }
+    
+    public double depositar(double monto) {
+        if (monto > 0) {
+            saldo += monto;
+            cantDepositosRealizados++;
+        } else {
+            System.out.println("El monto debe ser positivo");
+        }
+        return saldo;
+    }
+    
+    public double retirar(double monto) {
+        if (validarRetiro(monto)) {
+            saldo -= monto;
+            cantRetirosExitososRealizados++;
+        } else {
+            System.out.println("Fondos insuficientes");
+        }
+        return saldo;
+    }
+    
+    private Boolean validarRetiro(double monto) {
+        return monto > 0 && monto <= saldo;
+    }
+    
+    public static int getCantCuentasCreadad() {
+        return cantCuentasCreadas;
+    }
+    
+    public String toString() {
+        String msg = "";
+
+        msg += "========== Ficha de Cuenta ==========\n";
+        msg += "Código de Cuenta: " + codCuenta + "\n";
+        msg += "Nombre de la CuentaHabiente: " + nombreCuentaHabiente + "\n";
+        msg += "Saldo Actual: " + String.format("%.2f", saldo) + "\n";
+        msg += "Fecha de Creación: " + fechaCreacion + "\n";
+        msg += "Depósitos Realizados: " + cantDepositosRealizados + "\n";
+        msg += "Retiros Exitosos Realizados: " + cantRetirosExitososRealizados + "\n";
+        msg += "Número de cuenta: " +cantCuentasCreadas + "\n";
+        msg += "========================================\n";
+        return msg;
+    }
+}
