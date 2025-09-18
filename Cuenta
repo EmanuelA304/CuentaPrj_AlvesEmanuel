@@ -16,6 +16,8 @@ public class Cuenta {
     public Cuenta(String nombreCuentaHabiente, double pSaldo){
         this.nombreCuentaHabiente = nombreCuentaHabiente;
         saldo = pSaldo;
+        fechaCreacion = fechaCreacion();
+        cantCuentasCreadas++;
     }
     
     public Cuenta( double pSaldo) {
@@ -57,12 +59,18 @@ public class Cuenta {
     public static int getCantCuentasCreadad() {
         return cantCuentasCreadas;
     }
+     
+    private String fechaCreacion() {
+        Date fecha = new Date(System.currentTimeMillis());
+        DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        return formatoFecha.format(fecha);
+    }
     
     public String toString() {
         String msg = "";
 
         msg += "========== Ficha de Cuenta ==========\n";
-        msg += "Código de Cuenta: " + codCuenta + "\n";
+        msg += "Código de Cuenta: " + codCuenta + cantCuentasCreadas + "\n";
         msg += "Nombre de la CuentaHabiente: " + nombreCuentaHabiente + "\n";
         msg += "Saldo Actual: " + String.format("%.2f", saldo) + "\n";
         msg += "Fecha de Creación: " + fechaCreacion + "\n";
